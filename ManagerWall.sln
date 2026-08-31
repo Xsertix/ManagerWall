@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerWall", "ManagerWall\ManagerWall.csproj", "{384AA1C0-56DD-488D-8C4C-B26C2A010A45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{384AA1C0-56DD-488D-8C4C-B26C2A010A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384AA1C0-56DD-488D-8C4C-B26C2A010A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384AA1C0-56DD-488D-8C4C-B26C2A010A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384AA1C0-56DD-488D-8C4C-B26C2A010A45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8C965A4-FDB0-455F-9625-D4C7DF05E561}
+	EndGlobalSection
+EndGlobal
