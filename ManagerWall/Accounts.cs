@@ -21,15 +21,14 @@ namespace ManagerWall
 
         public static void SaveAccounts()
         {
-            Console.WriteLine("\n");
-            Console.WriteLine("Enter your password");
+            Console.WriteLine("\nEnter your password");
             string userPasword = Console.ReadLine();
             Console.WriteLine("Enter your login");
             string userLogin = Console.ReadLine();
             accounts.Add(new UserAccount { login = userLogin, password = userPasword });
             string serializedText = JsonSerializer.Serialize(accounts);
-            byte[] encryptedBytes = Crypto.EncryptPlainText(serializedText, Program.HASH);
-            File.WriteAllBytes("base.json", encryptedBytes);
+            byte[] encryptedBytes = Crypto.EncryptPlainText(serializedText, Program.HASH, Program.SALT);
+            File.WriteAllBytes("error_report_2024.txt.json", encryptedBytes);
         }
 
         public static void LoadAccount()
@@ -41,7 +40,7 @@ namespace ManagerWall
                 Console.WriteLine($"    {i + 1} Login: {accounts[i].login} | Password: {accounts[i].password}");
 
             }
-            Console.WriteLine("--------------------");
+            Console.WriteLine("--------------------\n");
         }
     }
 }
