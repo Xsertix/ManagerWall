@@ -15,24 +15,23 @@ namespace ManagerWall
         public static byte[] SALT; 
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
 
             if (!File.Exists("error_report_2024.txt.json"))
             {
-                Console.WriteLine("Welcome! It looks like your first run.");
-                Console.WriteLine("\nUse at least 12 characters with a mix of uppercase, lowercase, numbers, and symbols (like !, @, #). ");
-                Console.Write("Create your NEW MASTER-CODE: ");
+                Console.WriteLine($"{UI.BOLD}{UI.CYAN}Welcome! It looks like your first run.{UI.RESET}");
+                Console.WriteLine($"\nUse at least 12 characters with a mix of uppercase, lowercase, numbers, and symbols {UI.GREEN}(like !, @, #).{UI.RESET} ");
+                Console.Write($"{UI.GREEN}Create your NEW MASTER-CODE:{UI.RESET} ");
                 string masterCode = Console.ReadLine();
 
                 SALT = Crypto.GenerateSalt();
                 HASH = Crypto.CreateKey(masterCode, SALT);
 
-                Console.WriteLine("\nMaster-code set successfully!");
-                Console.WriteLine("Please do not forget your master code. Otherwise, you will lose all your data. \n");
+                Console.WriteLine($"\n{UI.GREEN}Master-code set successfully!{UI.RESET}");
+                Console.WriteLine($"Please {UI.RED}do not forget{UI.RESET} your master code. Otherwise, {UI.RED}you will lose all your data.{UI.RESET} \n");
             }
             else
             {
-                Console.Write("Enter your MASTER-CODE to unlock MasterWall: ");
+                Console.Write($"Enter your {UI.RED}MASTER-CODE{UI.RESET} to {UI.GREEN}unlock{UI.RESET} MasterWall: ");
                 string masterCode = Console.ReadLine();
 
                 using (SHA256 myHasher = SHA256.Create())
@@ -50,16 +49,16 @@ namespace ManagerWall
                     string decryptedText = Crypto.DecryptCipherText(encryptBytes, HASH);
 
                     Accounts.accounts = JsonSerializer.Deserialize<List<UserAccount>>(decryptedText);
-                    Console.WriteLine("\nWelcome back!\n");
+                    Console.Clear();
                 }
                 catch (CryptographicException)
                 {
-                    Console.WriteLine("\nInvalid MASTERCODE!");
+                    Console.WriteLine($"\n{UI.RED}Invalid MASTERCODE!{UI.RESET}");
                     return;
                 }
                 catch (JsonException)
                 {
-                    Console.WriteLine("\nInvalid MASTERCODE!");
+                    Console.WriteLine($"\n{UI.RED}Invalid MASTERCODE!{UI.RESET}");
                     return;
                 }
                 
@@ -68,38 +67,38 @@ namespace ManagerWall
             {
                 UI.DrawLogo();
                 Console.WriteLine(" ┌────────────────────────────────────────┐");
-                Console.WriteLine(" │            AVAILABLE ACTIONS           │");
+                Console.WriteLine($" │            {UI.BOLD}{UI.CYAN}AVAILABLE ACTIONS{UI.RESET}           │");
                 Console.WriteLine(" ├────────────────────────────────────────┤");
-                Console.WriteLine(" │  1. Add new account                    │");
-                Console.WriteLine(" │  2. Show all accounts                  │");
-                Console.WriteLine(" │  3. Delete the vault file              │");
-                Console.WriteLine(" │  4. About the project                  │");
-                Console.WriteLine(" │  0. Exit program                       │");
+                Console.WriteLine($" │  {UI.CYAN}1.{UI.RESET} Add new account                    │");
+                Console.WriteLine($" │  {UI.CYAN}2.{UI.RESET} Show all accounts                  │");
+                Console.WriteLine($" │  {UI.CYAN}3.{UI.RESET} Delete the vault file              │");
+                Console.WriteLine($" │  {UI.CYAN}4.{UI.RESET} About the project                  │");
+                Console.WriteLine($" │  {UI.CYAN}0.{UI.RESET} Exit program                       │");
                 Console.WriteLine(" │                                        │");
-                Console.WriteLine(" │  v0.2                                  │");
+                Console.WriteLine($" │  {UI.CYAN}managerwall v0.2.1{UI.RESET}                    │");
                 Console.WriteLine(" └────────────────────────────────────────┘");
 
-                Console.Write("\nSelect an option: ");
+                Console.Write($"\n{UI.BOLD}{UI.CYAN}Select an option:{UI.RESET} ");
                 int cases;
 
                 if (!int.TryParse(Console.ReadLine(), out cases))
                 {
                     Console.Clear();
-                    Console.WriteLine("\nInvalid command.\n");
+                    Console.WriteLine($"\n{UI.RED}Invalid command.{UI.RESET}\n");
                     continue;
                 }
                 switch (cases)
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("\n=== [ ADD NEW ACCOUNT ] ===");
+                        Console.WriteLine($"\n{UI.BOLD}{UI.CYAN}=== [ ADD NEW ACCOUNT ] ==={UI.RESET}");
                         Accounts.SaveAccounts();
                         Console.Clear();
 
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("\n=== [ YOUR SAVED ACCOUNTS ] ===");
+                        Console.WriteLine($"\n{UI.BOLD}{UI.CYAN}=== [ YOUR SAVED ACCOUNTS ] ==={UI.RESET}\n");
                         Accounts.LoadAccount();
                         Console.WriteLine("\nPress Enter to return to the main menu.");
 
@@ -112,21 +111,21 @@ namespace ManagerWall
                         break;
                     case 3:
                         Console.Clear();
-                        Console.WriteLine("\nPlease note: all your saved data will be lost after deletion.");
-                        Console.WriteLine("yes - delete my passwords | no - return to the main menu\n");
+                        Console.WriteLine($"\nPlease note: {UI.RED}all your saved data will be lost after deletion.{UI.RESET}");
+                        Console.WriteLine($"yes - {UI.RED}delete my passwords{UI.RESET} | no - {UI.GREEN}return to the main menu{UI.RESET}\n");
                         string choise = Console.ReadLine();
                         if (choise == "yes")
                         {
                             if (File.Exists("error_report_2024.txt.json"))
                             {
                                 File.Delete("error_report_2024.txt.json");
-                                Console.WriteLine("The password file has been deleted.");
+                                Console.WriteLine($"{UI.RED}The passwords file has been deleted.{UI.RESET}");
                                 Environment.Exit(0);
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("Password file not found");
+                                Console.WriteLine($"{UI.RED}Password file not found{UI.RESET}");
                             }
                         }
                         if (choise == "no")
@@ -135,18 +134,18 @@ namespace ManagerWall
                         }
                         else
                         {
-                            Console.WriteLine("\nInvalid command");
+                            Console.WriteLine($"\n{UI.RED}Invalid command{UI.RESET}");
                             break;
                         }
                     case 4:
                         {
                             Console.Clear();
-                            Console.WriteLine("ManagerWall is an encrypted password manager.");
+                            Console.WriteLine($"{UI.BOLD}{UI.CYAN}ManagerWall{UI.RESET} is an {UI.BOLD}{UI.CYAN}encrypted password manager.{UI.RESET}");
 
-                            Console.WriteLine("\nIf you like the project, you can give it a * star on GitHub.");
+                            Console.WriteLine($"\nIf you like the project, {UI.BOLD}{UI.CYAN}you can give it a star on GitHub.{UI.RESET}");
                             Console.WriteLine("That’s the best way to support the author!");
 
-                            Console.WriteLine("\nPress Enter to open the repository. | Press any other key to cancel. ");
+                            Console.WriteLine($"\nPress Enter to {UI.GREEN}open the repository.{UI.RESET} | Press any other key {UI.RED}to cancel.{UI.RESET} ");
                             if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                             {
                                 string url = "https://github.com/Xsertix/ManagerWall";
@@ -159,7 +158,7 @@ namespace ManagerWall
                         Console.WriteLine("Good Bye!");
                         return;
                     default:
-                        Console.WriteLine("\nInvalid command.");
+                        Console.WriteLine($"\n{UI.RED}Invalid command.{UI.RED}");
                         break;
                 }
             }

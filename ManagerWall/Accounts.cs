@@ -33,14 +33,11 @@ namespace ManagerWall
 
         public static void LoadAccount()
         {
-            Console.WriteLine("\n--------------------");
-            Console.WriteLine("Your accounts:");
             for (int i = 0; i < accounts.Count; i++)
             {
-                Console.WriteLine($"    {i + 1} Login: {accounts[i].login} | Password: {accounts[i].password}");
+                Console.WriteLine($"    {UI.BOLD}{UI.BLUE}[{i + 1}]{UI.RESET} {UI.BOLD}{UI.CYAN}Login:{UI.RESET} {accounts[i].login} | {UI.BOLD}{UI.CYAN}Password:{UI.RESET} {accounts[i].password}");
 
             }
-            Console.WriteLine("--------------------\n");
         }
     }
 }
